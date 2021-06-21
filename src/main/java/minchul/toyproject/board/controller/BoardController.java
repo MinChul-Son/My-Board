@@ -9,10 +9,7 @@ import minchul.toyproject.board.service.BoardService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -63,9 +60,11 @@ public class BoardController {
         }
     }
 
-    @PostMapping("/post/{postId}")
-    public String postDelete(@PathVariable("postId") Long id, Model model) {
+    @DeleteMapping("/post/{postId}")
+    public String postDelete(@PathVariable("postId") Long id) {
         boardService.deletePost(id);
         return "redirect:/";
     }
+
+
 }

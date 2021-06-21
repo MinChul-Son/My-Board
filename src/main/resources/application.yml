@@ -10,5 +10,9 @@ spring:
       hibernate:
     # show_sql: true
         format_sql: true
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
 logging.level:
   org.hibernate.SQL: debug
