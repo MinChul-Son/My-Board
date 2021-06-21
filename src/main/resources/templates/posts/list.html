@@ -43,7 +43,11 @@
 						<table>
 							<tbody>
 								<tr class="row100 body" th:each="post : ${postList}">
-									<td class="cell100 column1" th:text="${post.title}">제목</td>
+									<td class="cell100 column1">
+										<a th:href="@{'/post/' + ${post.id}}">
+											<span th:text="${post.title}">제목</span>
+										</a>
+									</td>
 									<td class="cell100 column2" th:text="${post.username}">작성자</td>
 									<td class="cell100 column3" th:text="${post.getCreatedDate().toLocalDate()}">작성일</td>
 									<td class="cell100 column4">카테고리</td>

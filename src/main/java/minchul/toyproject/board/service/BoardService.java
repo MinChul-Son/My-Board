@@ -11,9 +11,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class BoardService {
     private final BoardRepository boardRepository;
 
@@ -32,4 +34,20 @@ public class BoardService {
         }
         return postDtoList;
     }
+
+    public PostDto getPost(Long id) throws Exception {
+        Optional<Post> byId = boardRepository.findById(id);
+        if (byId.isPresent()) { // null이 아니면
+            PostDto postDto = new PostDto(byId.get());
+            return postDto;
+        } else {
+            throw new Exception("해당 게시물을 찾지 못했습니다.");
+        }
+    }
+
+    @Transactional
+    public void deletePost(Long id) {
+        boardRepository.deleteById(id);
+    }
+
 }
