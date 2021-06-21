@@ -66,5 +66,25 @@ public class BoardController {
         return "redirect:/";
     }
 
+    @GetMapping("/post/edit/{postId}")
+    public String postEdit(@PathVariable("postId") Long id, Model model) throws Exception {
+        try {
+            PostDto postDto = boardService.getPost(id);
+            PostForm postForm = new PostForm(postDto.getId(), postDto.getTitle(), postDto.getUsername(), postDto.getContent());
+            log.info(postDto.getContent());
+            log.info(postDto.getUsername());
+            log.info(postDto.getTitle());
+            model.addAttribute("post", postForm);
+            return "posts/edit";
+        } catch (Exception e) {
+            log.error("해당 게시물을 찾기 못햇습니다.");
+            return "redirect:/";
+        }
+    }
 
+    @PutMapping("/post/edit/{postId}")
+    public String postUpdate(@PathVariable("postId") Long id, @Valid PostForm form, BindingResult result) throws Exception {
+        boardService.updatePost(id, form);
+        return "redirect:/";
+    }
 }

@@ -1,6 +1,7 @@
 package minchul.toyproject.board.service;
 
 import lombok.RequiredArgsConstructor;
+import minchul.toyproject.board.controller.PostForm;
 import minchul.toyproject.board.domain.dto.PostDto;
 import minchul.toyproject.board.domain.entity.Post;
 import minchul.toyproject.board.repository.BoardRepository;
@@ -48,6 +49,19 @@ public class BoardService {
     @Transactional
     public void deletePost(Long id) {
         boardRepository.deleteById(id);
+    }
+
+    @Transactional
+    public Long updatePost(Long id, PostForm postForm) throws Exception{
+        Optional<Post> byId = boardRepository.findById(id);
+        if (byId.isPresent()) {
+            Post post = byId.get();
+            post.changePost(post, postForm);
+            return post.getId();
+        } else {
+            throw new Exception("해당 게시물을 찾지 못했습니다.");
+        }
+
     }
 
 }

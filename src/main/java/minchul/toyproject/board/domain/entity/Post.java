@@ -3,6 +3,7 @@ package minchul.toyproject.board.domain.entity;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import minchul.toyproject.board.controller.PostForm;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
@@ -23,5 +24,11 @@ public class Post extends BaseTimeEntity{
         this.username = username;
         this.title = title;
         this.content = content;
+    }
+
+    public Post changePost(Post post, PostForm postForm) {
+        post.title = postForm.getTitle();
+        post.content = postForm.getContent();
+        return post;
     }
 }
