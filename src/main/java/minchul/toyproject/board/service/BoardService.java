@@ -7,6 +7,7 @@ import minchul.toyproject.board.domain.entity.Post;
 import minchul.toyproject.board.repository.BoardRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,15 +26,11 @@ public class BoardService {
         return boardRepository.save(post).getId();
     }
 
-    @Transactional
-    public List<PostDto> postList() {
-        List<Post> postList = boardRepository.findAll();
-        List<PostDto> postDtoList = new ArrayList<>();
-
-        for (Post post : postList) {
-            postDtoList.add(new PostDto(post));
-        }
-        return postDtoList;
+    public Page<PostDto> postList(int page) {
+        PageRequest pageRequest = PageRequest.of(page, 5, Sort.by(Sort.Direction.DESC, "createdDate"));
+        Page<Post> pageMap = boardRepository.findAll(pageRequest);
+        Page<PostDto> toDtoMap = pageMap.map(post -> new PostDto(post));
+        return toDtoMap;
     }
 
     @Transactional

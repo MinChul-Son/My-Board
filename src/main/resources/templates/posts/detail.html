@@ -11,7 +11,10 @@
     <div class="card">
         <div class="card-body">
             <h5 class="card-title" th:text="@{${post.title} + ' - ' + ${post.username}}"></h5>
-            <p class="card-text"><small class="text-muted" th:text="${#temporals.format(post.createdDate, 'yyyy-MM-dd HH:mm')}"></small></p>
+            <p class="card-text"><small class="text-muted"
+                                        th:text="${#temporals.format(post.createdDate, 'yyyy-MM-dd HH:mm')} + '  |  조회수: ' + ${post.getViewCount()}">
+
+            </small></p>
             <p class="card-text" th:text="${post.content}"></p>
         </div>
     </div>

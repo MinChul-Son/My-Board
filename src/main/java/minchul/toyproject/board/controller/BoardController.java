@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import minchul.toyproject.board.domain.dto.PostDto;
 import minchul.toyproject.board.domain.entity.Post;
 import minchul.toyproject.board.service.BoardService;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,9 +23,9 @@ public class BoardController {
     private final BoardService boardService;
 
     @GetMapping("/")
-    public String postList(Model model) {
-        List<PostDto> result = boardService.postList();
-        model.addAttribute("postList", result);
+    public String postList(@RequestParam(defaultValue = "0") int page, Model model) {
+        Page<PostDto> dtoPage = boardService.postList(page);
+        model.addAttribute("postList", dtoPage);
         return "posts/list";
     }
 
