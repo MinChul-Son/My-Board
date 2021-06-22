@@ -4,7 +4,6 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import minchul.toyproject.board.controller.PostForm;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 
@@ -20,6 +19,10 @@ public class Post extends BaseTimeEntity{
     private String title;
     private String content;
     private int viewCount;
+    @ManyToOne(targetEntity = Member.class, fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
+    private Member member;
+
 
     public Post(String username, String title, String content) {
         this.username = username;
