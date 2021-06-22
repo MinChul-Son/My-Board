@@ -22,20 +22,25 @@ public class BoardController {
     private final BoardService boardService;
 
     @GetMapping("/")
+    public String home() {
+        return "index";
+    }
+
+    @GetMapping("/board")
     public String postList(@RequestParam(defaultValue = "0") int page, Model model) {
         Page<PostDto> dtoPage = boardService.postList(page);
         model.addAttribute("postList", dtoPage);
         return "posts/list";
     }
 
-    @GetMapping("/post/new")
+    @GetMapping("/board/post/new")
     public String newPostForm(Model model) {
         model.addAttribute("postForm", new PostForm());
         return "posts/createPostForm";
     }
 
 
-    @PostMapping("/post/new")
+    @PostMapping("/board/post/new")
     public String savePost(@Valid PostForm form, BindingResult result) {
         if (result.hasErrors()) {
             log.info("오류가 있습니다.");
@@ -45,10 +50,10 @@ public class BoardController {
         log.info("Content:{}, Title: {}", newPost.getContent(), newPost.getTitle());
         log.info("Content:{}, Title: {}", form.getContent(), form.getTitle());
 
-        return "redirect:/";
+        return "redirect:/board";
     }
 
-    @GetMapping("/post/{postId}")
+    @GetMapping("/board/post/{postId}")
     public String postDetail(@PathVariable("postId") Long id, Model model) throws Exception {
         try {
             PostDto postDto = boardService.getPost(id);
@@ -56,17 +61,17 @@ public class BoardController {
             return "posts/detail";
         } catch (Exception e) {
             log.error("해당 게시물을 찾기 못햇습니다.");
-            return "redirect:/";
+            return "redirect:/board";
         }
     }
 
-    @DeleteMapping("/post/{postId}")
+    @DeleteMapping("/board/post/{postId}")
     public String postDelete(@PathVariable("postId") Long id) {
         boardService.deletePost(id);
-        return "redirect:/";
+        return "redirect:/board";
     }
 
-    @GetMapping("/post/edit/{postId}")
+    @GetMapping("/board/post/edit/{postId}")
     public String postEdit(@PathVariable("postId") Long id, Model model) throws Exception {
         try {
             PostDto postDto = boardService.getPost(id);
@@ -78,13 +83,13 @@ public class BoardController {
             return "posts/edit";
         } catch (Exception e) {
             log.error("해당 게시물을 찾기 못햇습니다.");
-            return "redirect:/";
+            return "redirect:/board";
         }
     }
 
-    @PutMapping("/post/edit/{postId}")
+    @PutMapping("/board/post/edit/{postId}")
     public String postUpdate(@PathVariable("postId") Long id, @Valid PostForm form, BindingResult result) throws Exception {
         boardService.updatePost(id, form);
-        return "redirect:/";
+        return "redirect:/board";
     }
 }

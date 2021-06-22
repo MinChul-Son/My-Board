@@ -4,10 +4,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 @Getter
@@ -19,5 +16,17 @@ public class Member extends BaseTimeEntity {
     private Long id;
     private String username;
     private Long age;
-    private String job;
+    private String password;
+    private int enabled;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "role_id")
+    private Role role;
+
+    public Member(String username, Long age, String password, int enabled, Role role) {
+        this.username = username;
+        this.age = age;
+        this.password = password;
+        this.enabled = enabled;
+        this.role = role;
+    }
 }

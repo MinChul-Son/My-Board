@@ -44,7 +44,7 @@
 							<tbody>
 								<tr class="row100 body" th:each="post : ${postList}">
 									<td class="cell100 column1">
-										<a th:href="@{'/post/' + ${post.id}}">
+										<a th:href="@{'/board/post/' + ${post.id}}">
 											<span th:text="${post.title}">제목</span>
 										</a>
 									</td>
@@ -59,7 +59,7 @@
 				</div>
 				</div>
 			<div class="col-auto">
-				<a class="btn btn-info" th:href="@{'/post/new'}" role="button">글쓰기</a>
+				<a class="btn btn-info" th:href="@{'/board/post/new'}" role="button">글쓰기</a>
 			</div>
 			</div>
 		</div>
@@ -78,13 +78,13 @@
 						<a class="nav-link disabled" href="#" aria-disabled="true">이전페이지</a>
 					</li>
 					<li class="nav-item" th:unless="${postList.isFirst()}">
-						<a class="nav-link" th:href="@{/(page=${postList.number}-1)}">이전페이지</a>
+						<a class="nav-link" th:href="@{/board(page=${postList.number}-1)}">이전페이지</a>
 					</li>
 					<li class="nav-item" th:if="${postList.isLast()}">
 						<a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">다음페이지</a>
 					</li>
 					<li class="nav-item" th:unless="${postList.isLast()}">
-						<a class="nav-link" th:href="@{/(page=${postList.number}+1)}" tabindex="-1">다음페이지</a>
+						<a class="nav-link" th:href="@{/board(page=${postList.number}+1)}" tabindex="-1">다음페이지</a>
 					</li>
 				</ul>
 			</div>

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5 ">
+<head>
+    <title>자바민국 커뮤니티</title>
+</head>
+<body>
+<h1>Welcome!</h1>
+<p sec:authorize="isAnonymous()">Click <a th:href="@{#}">회원가입</a> to see a greeting.</p>
+<p sec:authorize="isAnonymous()">Click <a th:href="@{/login}">로그인</a> to see a greeting.</p>
+<p sec:authorize="isAuthenticated()">Click <a th:href="@{/logout}">로그아웃</a> to see a greeting.</p>
+</body>
+</html>
