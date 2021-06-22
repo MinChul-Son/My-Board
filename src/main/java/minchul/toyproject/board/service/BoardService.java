@@ -36,10 +36,13 @@ public class BoardService {
         return postDtoList;
     }
 
+    @Transactional
     public PostDto getPost(Long id) throws Exception {
         Optional<Post> byId = boardRepository.findById(id);
         if (byId.isPresent()) { // null이 아니면
-            PostDto postDto = new PostDto(byId.get());
+            Post post = byId.get();
+            post.increaseViewCount();
+            PostDto postDto = new PostDto(post);
             return postDto;
         } else {
             throw new Exception("해당 게시물을 찾지 못했습니다.");

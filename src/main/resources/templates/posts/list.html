@@ -51,7 +51,7 @@
 									<td class="cell100 column2" th:text="${post.username}">작성자</td>
 									<td class="cell100 column3" th:text="${post.getCreatedDate().toLocalDate()}">작성일</td>
 									<td class="cell100 column4">카테고리</td>
-									<td class="cell100 column5">조회수</td>
+									<td class="cell100 column5" th:text="${post.getViewCount()}">조회수</td>
 								</tr>
 							</tbody>
 						</table>

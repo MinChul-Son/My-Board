@@ -19,6 +19,7 @@ public class Post extends BaseTimeEntity{
     private String username;
     private String title;
     private String content;
+    private int viewCount;
 
     public Post(String username, String title, String content) {
         this.username = username;
@@ -30,5 +31,9 @@ public class Post extends BaseTimeEntity{
         post.title = postForm.getTitle();
         post.content = postForm.getContent();
         return post;
+    }
+
+    public void increaseViewCount() {
+        this.viewCount++;
     }
 }

@@ -16,6 +16,7 @@ public class PostDto {
     private String username;
     private String title;
     private String content;
+    private int viewCount;
     private LocalDateTime createdDate;
     private LocalDateTime modifiedDate;
 
@@ -24,6 +25,7 @@ public class PostDto {
         this.username = post.getUsername();
         this.title = post.getTitle();
         this.content = post.getContent();
+        this.viewCount = post.getViewCount();
         this.createdDate = post.getCreatedDate();
         this.modifiedDate = post.getLastModifiedDate();
     }
