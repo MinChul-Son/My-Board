@@ -1,5 +1,5 @@
 # 게시판 만들기
-## 사용 기술 : SpringMVC, SpringBoot, Spring Data JPA, Querydsl
+## 사용 기술 : SpringMVC, SpringBoot, Spring Data JPA, Spring Security, Querydsl
 ## IDE : IntelliJ
 ## DB : MySQL
 ## Template Engine : Thyleaf
@@ -28,3 +28,17 @@
   - 각 회원이 어떤 권한을 가지는지에 대한 Role 엔티티를 추가하고 Member와 다대일로 양방향 매핑 **완료**
 * Member 엔티티 추가, Post 엔티티에서 1:N 관계로 단방향 연관관계로 매핑 ~~예정~~ **완료**
   - 누가 게시물을 작성했는지를 입력하는 것이 아니라 로그인한 회원의 정보를 가지고 값을 자동으로 넣을 것이기 때문에 Member 입장에서는 Post를 알 필요가 없다고 생각하여 단방향 연관관계로 설정하였다. 추후에 만약 내 생각이 틀렸다고 판단되면 변경할 수 도 있는 부분임
+
+
+### 6/23 to-do-list
+* Role 엔티티 변경
+  - Role을 엔티티로 정의하고 Member와 다대일 양방향 매핑을 진행하였었는데, 이를 위해서 Role Repository를 만들고 추가적인 기능추가가 너무 번거롭다고 판단하여 Role을 Enum타입으로 정의하여 사용하는 것으로 변경하였다.
+  - 회원 가입시에 전부 다 USER 권한을 부여하는 것으로 설정
+
+* 회원 가입, 로그인 기능 **완료**
+  - 회원 가입 시에 패스워드를 암호화하여 DB에 저장하도록 하였다.(Spring Security)
+  - 로그인 여부에 따라 홈 화면에서 나타나는 화면을 달리하도록 설정
+* 로그아웃 기능 추가 ~~예정~~ **완료**
+
+
+
