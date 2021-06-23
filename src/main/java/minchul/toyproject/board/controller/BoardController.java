@@ -7,6 +7,7 @@ import minchul.toyproject.board.domain.dto.PostDto;
 import minchul.toyproject.board.domain.entity.Post;
 import minchul.toyproject.board.service.BoardService;
 import org.springframework.data.domain.Page;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -34,22 +35,20 @@ public class BoardController {
     }
 
     @GetMapping("/board/post/new")
-    public String newPostForm(Model model) {
+    public String newPostForm(Model model, Authentication auth) {
+        model.addAttribute("auth", auth);
         model.addAttribute("postForm", new PostForm());
         return "posts/createPostForm";
     }
 
 
     @PostMapping("/board/post/new")
-    public String savePost(@Valid PostForm form, BindingResult result) {
+    public String savePost(@Valid PostForm form, BindingResult result, Authentication auth) {
         if (result.hasErrors()) {
             log.info("오류가 있습니다.");
         }
-        Post newPost = new Post(form.getUsername(), form.getTitle(), form.getContent());
+        Post newPost = new Post(auth.getName(), form.getTitle(), form.getContent());
         boardService.savePost(newPost);
-        log.info("Content:{}, Title: {}", newPost.getContent(), newPost.getTitle());
-        log.info("Content:{}, Title: {}", form.getContent(), form.getTitle());
-
         return "redirect:/board";
     }
 
