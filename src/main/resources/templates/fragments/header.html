@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:fragment="header">
     <!-- Required meta tags -->
     <title>자바민국 커뮤니티</title>
@@ -28,9 +28,21 @@ ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
             </form>
 
             <div class="text-end">
-                <button type="button" class="btn btn-outline-light me-2" href="/login">Login</button>
-                <button type="button" class="btn btn-warning">Sign-up</button>
+                <form th:action="@{'member/signIn'}" sec:authorize="!isAuthenticated()">
+                <button type="submit" class="btn btn-outline-light me-2">로그인</button>
+                </form>
             </div>
+            <div>
+                <form th:action="@{'/member/signUp'}" sec:authorize="!isAuthenticated()">
+                <button type="submit" class="btn btn-warning">회원가입</button>
+                </form>
+            </div>
+            <form class="form-inline my-2 my-lg-0" th:action="@{/logout}" method="POST" sec:authorize="isAuthenticated()">
+                <!-- <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search"> -->
+                <span class="text-white" sec:authentication="name">사용자</span>
+                <span class="text-white mx-2" sec:authentication="principal.authorities"><권한></권한></span>
+                <button class="btn btn-secondary my-2 my-sm-0" type="submit">Logout</button>
+            </form>
         </div>
     </div>
 </header>

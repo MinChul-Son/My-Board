@@ -15,18 +15,22 @@ public class Member extends BaseTimeEntity {
     @Column(name = "member_id")
     private Long id;
     private String username;
-    private Long age;
     private String password;
     private int enabled;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "role_id")
+    @Enumerated(EnumType.STRING)
     private Role role;
 
-    public Member(String username, Long age, String password, int enabled, Role role) {
+    public Member(String username, String password) {
         this.username = username;
-        this.age = age;
         this.password = password;
-        this.enabled = enabled;
-        this.role = role;
+    }
+
+    public void encodingPw(Member member, String encodedPw) {
+        member.password = encodedPw;
+    }
+
+    public void giveAuth(Member member) {
+        member.role = Role.ROLE_USER;
+        member.enabled = 1;
     }
 }
