@@ -4,10 +4,12 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import minchul.toyproject.board.domain.dto.PostDto;
+import minchul.toyproject.board.domain.entity.Member;
 import minchul.toyproject.board.domain.entity.Post;
 import minchul.toyproject.board.service.BoardService;
 import org.springframework.data.domain.Page;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -48,7 +50,7 @@ public class BoardController {
             log.info("오류가 있습니다.");
         }
         Post newPost = new Post(auth.getName(), form.getTitle(), form.getContent());
-        boardService.savePost(newPost);
+        boardService.savePost(newPost, auth.getName());
         return "redirect:/board";
     }
 

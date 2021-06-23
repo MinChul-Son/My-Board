@@ -3,8 +3,10 @@ package minchul.toyproject.board.service;
 import lombok.RequiredArgsConstructor;
 import minchul.toyproject.board.controller.PostForm;
 import minchul.toyproject.board.domain.dto.PostDto;
+import minchul.toyproject.board.domain.entity.Member;
 import minchul.toyproject.board.domain.entity.Post;
 import minchul.toyproject.board.repository.BoardRepository;
+import minchul.toyproject.board.repository.MemberRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -18,9 +20,12 @@ import java.util.Optional;
 @Transactional(readOnly = true)
 public class BoardService {
     private final BoardRepository boardRepository;
+    private final MemberRepository memberRepository;
 
     @Transactional
-    public Long savePost(Post post) {
+    public Long savePost(Post post, String username) {
+        Member findMember = memberRepository.findByUsername(username);
+        post.writerFromSession(post, findMember);
         return boardRepository.save(post).getId();
     }
 

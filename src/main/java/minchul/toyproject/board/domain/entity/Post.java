@@ -39,4 +39,8 @@ public class Post extends BaseTimeEntity{
     public void increaseViewCount() {
         this.viewCount++;
     }
+
+    public void writerFromSession(Post post, Member member) {
+        post.member = member;
+    }
 }
