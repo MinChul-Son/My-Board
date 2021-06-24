@@ -55,10 +55,12 @@ public class BoardController {
     }
 
     @GetMapping("/board/post/{postId}")
-    public String postDetail(@PathVariable("postId") Long id, Model model) throws Exception {
+    public String postDetail(@PathVariable("postId") Long id, Model model, Authentication auth) throws Exception {
         try {
             PostDto postDto = boardService.getPost(id);
             model.addAttribute("post", postDto);
+            Boolean isWriter = boardService.isWriter(postDto, auth.getName());
+            model.addAttribute("isWriter", isWriter);
             return "posts/detail";
         } catch (Exception e) {
             log.error("해당 게시물을 찾기 못햇습니다.");

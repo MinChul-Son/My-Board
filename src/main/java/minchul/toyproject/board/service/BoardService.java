@@ -1,6 +1,7 @@
 package minchul.toyproject.board.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import minchul.toyproject.board.controller.PostForm;
 import minchul.toyproject.board.domain.dto.PostDto;
 import minchul.toyproject.board.domain.entity.Member;
@@ -18,6 +19,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
+@Slf4j
 public class BoardService {
     private final BoardRepository boardRepository;
     private final MemberRepository memberRepository;
@@ -65,6 +67,20 @@ public class BoardService {
             throw new Exception("해당 게시물을 찾지 못했습니다.");
         }
 
+    }
+
+    public Boolean isWriter(PostDto postDto, String username) {
+        Member fromSession = memberRepository.findByUsername(username);
+        log.info("correct");
+        Optional<Post> findPost = boardRepository.findById(postDto.getId());
+        if (findPost.isPresent()) {
+            Member fromPost = findPost.get().getMember();
+            if (fromSession == fromPost) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
 }

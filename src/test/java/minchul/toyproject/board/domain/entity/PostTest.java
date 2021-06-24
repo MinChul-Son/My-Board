@@ -5,6 +5,7 @@ import minchul.toyproject.board.repository.BoardRepository;
 import minchul.toyproject.board.repository.MemberRepository;
 import minchul.toyproject.board.service.BoardService;
 import minchul.toyproject.board.service.MemberService;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 
 import java.util.List;
+import java.util.Optional;
 
 import static minchul.toyproject.board.domain.entity.QPost.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -68,6 +70,13 @@ class PostTest {
         for (Post post1 : result) {
             System.out.println("post1 = " + post1.getMember());
         }
+    }
+
+    @Test
+    void 게시물에서회원엔티티조회() {
+        Optional<Post> byId = boardRepository.findById(19L);
+        Post post = byId.get();
+        Assertions.assertThat(post.getMember().getUsername()).isEqualTo("son");
     }
 
 
