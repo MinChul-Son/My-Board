@@ -23,8 +23,8 @@ public class BoardService {
     private final MemberRepository memberRepository;
 
     @Transactional
-    public Long savePost(Post post, String username) {
-        Member findMember = memberRepository.findByUsername(username);
+    public Long savePost(Post post) {
+        Member findMember = memberRepository.findByUsername(post.getUsername());
         post.writerFromSession(post, findMember);
         return boardRepository.save(post).getId();
     }

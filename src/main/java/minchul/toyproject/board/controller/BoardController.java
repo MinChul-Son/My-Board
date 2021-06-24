@@ -50,7 +50,7 @@ public class BoardController {
             log.info("오류가 있습니다.");
         }
         Post newPost = new Post(auth.getName(), form.getTitle(), form.getContent());
-        boardService.savePost(newPost, auth.getName());
+        boardService.savePost(newPost);
         return "redirect:/board";
     }
 

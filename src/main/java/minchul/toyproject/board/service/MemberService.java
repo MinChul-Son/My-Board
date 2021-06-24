@@ -19,6 +19,7 @@ public class MemberService {
     public Long save(Member member) {
         String encodedPw = passwordEncoder.encode(member.getPassword());
         member.encodingPw(member, encodedPw); // 패스워드 인코딩
+        member.giveAuth(member);
 
         return memberRepository.save(member).getId();
     }
