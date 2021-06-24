@@ -10,6 +10,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
@@ -18,6 +21,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static minchul.toyproject.board.domain.entity.QPost.*;
+import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
@@ -76,7 +80,18 @@ class PostTest {
     void 게시물에서회원엔티티조회() {
         Optional<Post> byId = boardRepository.findById(19L);
         Post post = byId.get();
-        Assertions.assertThat(post.getMember().getUsername()).isEqualTo("son");
+        assertThat(post.getMember().getUsername()).isEqualTo("son");
+    }
+
+    @Test
+    void 내게시물조회() {
+        PageRequest pageRequest = PageRequest.of(0, 5, Sort.by(Sort.Direction.DESC, "createdDate"));
+        Page<Post> result = boardRepository.findPostByMember("son", pageRequest);
+        for (Post post1 : result) {
+            System.out.println("post1 = " + post1);
+        }
+        assertThat(result.getContent().size()).isEqualTo(3);
+
     }
 
 

@@ -32,10 +32,14 @@ public class BoardService {
     }
 
     public Page<PostDto> postList(int page) {
-        PageRequest pageRequest = PageRequest.of(page, 5, Sort.by(Sort.Direction.DESC, "createdDate"));
+        PageRequest pageRequest = createPageRequest(page);
         Page<Post> pageMap = boardRepository.findAll(pageRequest);
         Page<PostDto> toDtoMap = pageMap.map(post -> new PostDto(post));
         return toDtoMap;
+    }
+
+    public PageRequest createPageRequest(int page) {
+        return PageRequest.of(page, 5, Sort.by(Sort.Direction.DESC, "createdDate"));
     }
 
     @Transactional
@@ -81,6 +85,13 @@ public class BoardService {
         }
 
         return false;
+    }
+
+    public Page<PostDto> myList(int page, String username) {
+        PageRequest pageRequest = createPageRequest(page);
+        Page<Post> pageMap = boardRepository.findPostByMember(username, pageRequest);
+        Page<PostDto> toDtoMap = pageMap.map(post -> new PostDto(post));
+        return toDtoMap;
     }
 
 }

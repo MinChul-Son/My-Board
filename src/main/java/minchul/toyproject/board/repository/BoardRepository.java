@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface BoardRepository extends JpaRepository<Post, Long> {
@@ -16,4 +17,8 @@ public interface BoardRepository extends JpaRepository<Post, Long> {
 
     @EntityGraph(attributePaths = {"member"})
     Optional<Post> findById(Long id);
+
+    @EntityGraph(attributePaths = {"member"})
+    @Query("select p from Post p where p.member.username = :username")
+    Page<Post> findPostByMember(@Param("username") String username, Pageable pageable);
 }

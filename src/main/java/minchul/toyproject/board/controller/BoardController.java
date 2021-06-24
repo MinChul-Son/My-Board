@@ -36,6 +36,13 @@ public class BoardController {
         return "posts/list";
     }
 
+    @GetMapping("/board/mypost")
+    public String myPost(@RequestParam(defaultValue = "0") int page, Model model, Authentication auth) {
+        Page<PostDto> dtoPage = boardService.myList(page, auth.getName());
+        model.addAttribute("postList", dtoPage);
+        return "posts/list";
+    }
+
     @GetMapping("/board/post/new")
     public String newPostForm(Model model, Authentication auth) {
         model.addAttribute("auth", auth);
