@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import minchul.toyproject.board.domain.dto.PostDto;
+import minchul.toyproject.board.domain.entity.Category;
 import minchul.toyproject.board.domain.entity.Member;
 import minchul.toyproject.board.domain.entity.Post;
 import minchul.toyproject.board.service.BoardService;
@@ -16,6 +17,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Arrays;
 
 @Controller
 @RequiredArgsConstructor
@@ -47,6 +49,7 @@ public class BoardController {
     public String newPostForm(Model model, Authentication auth) {
         model.addAttribute("auth", auth);
         model.addAttribute("postForm", new PostForm());
+        model.addAttribute("categories", Arrays.asList(Category.values()));
         return "posts/createPostForm";
     }
 
@@ -56,7 +59,7 @@ public class BoardController {
         if (result.hasErrors()) {
             log.info("오류가 있습니다.");
         }
-        Post newPost = new Post(auth.getName(), form.getTitle(), form.getContent());
+        Post newPost = new Post(auth.getName(), form.getTitle(), form.getContent(), form.getCategory());
         boardService.savePost(newPost);
         return "redirect:/board";
     }
@@ -85,7 +88,7 @@ public class BoardController {
     public String postEdit(@PathVariable("postId") Long id, Model model) throws Exception {
         try {
             PostDto postDto = boardService.getPost(id);
-            PostForm postForm = new PostForm(postDto.getId(), postDto.getTitle(), postDto.getUsername(), postDto.getContent());
+            PostForm postForm = new PostForm(postDto.getId(), postDto.getTitle(), postDto.getUsername(), postDto.getContent(), postDto.getCategory());
             log.info(postDto.getContent());
             log.info(postDto.getUsername());
             log.info(postDto.getTitle());

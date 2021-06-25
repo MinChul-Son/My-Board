@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import minchul.toyproject.board.domain.entity.Category;
 import minchul.toyproject.board.domain.entity.Post;
 
 import java.time.LocalDateTime;
@@ -16,6 +17,7 @@ public class PostDto {
     private String username;
     private String title;
     private String content;
+    private Category category;
     private int viewCount;
     private LocalDateTime createdDate;
     private LocalDateTime modifiedDate;
@@ -28,6 +30,7 @@ public class PostDto {
         this.viewCount = post.getViewCount();
         this.createdDate = post.getCreatedDate();
         this.modifiedDate = post.getLastModifiedDate();
+        this.category = post.getCategory();
     }
 
 

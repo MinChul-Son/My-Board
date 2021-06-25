@@ -19,15 +19,18 @@ public class Post extends BaseTimeEntity{
     private String title;
     private String content;
     private int viewCount;
+    @Enumerated(EnumType.STRING)
+    private Category category;
     @ManyToOne(targetEntity = Member.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
 
 
-    public Post(String username, String title, String content) {
+    public Post(String username, String title, String content, Category category) {
         this.username = username;
         this.title = title;
         this.content = content;
+        this.category = category;
     }
 
     public Post changePost(Post post, PostForm postForm) {
