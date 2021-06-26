@@ -21,7 +21,8 @@ public class PostForm {
     private String title;
     private String username;
     private String content;
-    private Category category;
+    private Category
+            category;
 
     public PostForm(Long id, @NotEmpty(message = "필수 항목입니다.") String title, String username, String content, Category category) {
         this.id = id;
