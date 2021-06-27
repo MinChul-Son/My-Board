@@ -29,8 +29,10 @@
 				<span class="caret"></span>
 			</a>
 			<ul class="dropdown-menu">
-				<li><a href="#">Test1</a></li>
-				<li><a href="#">Test2</a></li>
+				<li><a href="/board">전체</a></li>
+				<li th:each="category : ${categories}">
+					<a th:text="${category}" th:href="@{/board(category=${category})}">카테고리명</a>
+				</li>
 			</ul>
 		</li>
 	</ul>

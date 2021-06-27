@@ -35,6 +35,7 @@ public class BoardController {
     public String postList(@RequestParam(defaultValue = "0") int page, Model model) {
         Page<PostDto> dtoPage = boardService.postList(page);
         model.addAttribute("postList", dtoPage);
+        model.addAttribute("categories", Arrays.asList(Category.values()));
         return "posts/list";
     }
 
