@@ -50,8 +50,8 @@ class PostTest {
         memberService.save(member1);
         memberService.save(member2);
 
-        Post post1 = new Post("member1", "test1", "this is test1");
-        Post post2 = new Post("member2", "test2", "this is test2");
+        Post post1 = new Post("member1", "test1", "this is test1",Category.자유);
+        Post post2 = new Post("member2", "test2", "this is test2", Category.자바);
         boardService.savePost(post1);
         boardService.savePost(post2);
     }
@@ -92,6 +92,16 @@ class PostTest {
         }
         assertThat(result.getContent().size()).isEqualTo(3);
 
+    }
+
+    @Test
+    void 카테고리로조회() {
+        PageRequest pageRequest = PageRequest.of(0, 5, Sort.by(Sort.Direction.DESC, "createdDate"));
+        Page<Post> result = boardRepository.findByCategory(Category.자유, pageRequest);
+        List<Post> content = result.getContent();
+        for (Post post1 : content) {
+            System.out.println("post1 = " + post1);
+        }
     }
 
 

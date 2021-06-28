@@ -1,5 +1,6 @@
 package minchul.toyproject.board.repository;
 
+import minchul.toyproject.board.domain.entity.Category;
 import minchul.toyproject.board.domain.entity.Post;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,4 +22,7 @@ public interface BoardRepository extends JpaRepository<Post, Long> {
     @EntityGraph(attributePaths = {"member"})
     @Query("select p from Post p where p.member.username = :username")
     Page<Post> findPostByMember(@Param("username") String username, Pageable pageable);
+
+    @Query("select p from Post p where p.category = :category")
+    Page<Post> findByCategory(@Param("category") Category category, Pageable pageable);
 }

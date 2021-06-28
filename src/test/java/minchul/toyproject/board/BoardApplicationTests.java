@@ -23,13 +23,4 @@ class BoardApplicationTests {
 	void contextLoads() {
 	}
 
-	@Test
-	void save() {
-		Post test_post = new Post("minchul", "test", "This is test!");
-		boardRepository.save(test_post);
-
-		em.flush();
-		em.clear();
-	}
-
 }

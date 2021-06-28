@@ -32,8 +32,11 @@ public class BoardController {
     }
 
     @GetMapping("/board")
-    public String postList(@RequestParam(defaultValue = "0") int page, Model model) {
-        Page<PostDto> dtoPage = boardService.postList(page);
+    public String postList(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(required = false) Category category,
+            Model model) {
+        Page<PostDto> dtoPage = boardService.postList(page, category);
         model.addAttribute("postList", dtoPage);
         model.addAttribute("categories", Arrays.asList(Category.values()));
         return "posts/list";

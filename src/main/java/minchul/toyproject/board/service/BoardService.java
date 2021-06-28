@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import minchul.toyproject.board.controller.PostForm;
 import minchul.toyproject.board.domain.dto.PostDto;
+import minchul.toyproject.board.domain.entity.Category;
 import minchul.toyproject.board.domain.entity.Member;
 import minchul.toyproject.board.domain.entity.Post;
 import minchul.toyproject.board.repository.BoardRepository;
@@ -31,9 +32,15 @@ public class BoardService {
         return boardRepository.save(post).getId();
     }
 
-    public Page<PostDto> postList(int page) {
+    public Page<PostDto> postList(int page, Category category) {
         PageRequest pageRequest = createPageRequest(page);
-        Page<Post> pageMap = boardRepository.findAll(pageRequest);
+        log.info("This is service");
+        Page<Post> pageMap;
+        if (category == null) {
+            pageMap = boardRepository.findAll(pageRequest);
+        } else {
+            pageMap = boardRepository.findByCategory(category, pageRequest);
+        }
         Page<PostDto> toDtoMap = pageMap.map(post -> new PostDto(post));
         return toDtoMap;
     }
