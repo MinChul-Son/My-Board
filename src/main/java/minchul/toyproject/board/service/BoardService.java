@@ -42,7 +42,8 @@ public class BoardService {
          * 3. 내 게시물 전체 조회
          * 4. 내 게시물 중 카테고리 별 조회
          */
-        if (searchDto == null) { // 검색창으로 검색하지 않음.
+        log.info(String.valueOf(searchDto));
+        if (searchDto.getSearchValue() == null) { // 검색창으로 검색하지 않음.
             if (category == null && myPost == 0) {
                 return postToPostDto(boardRepository.findAll(pageRequest));
             } else if (category == null && myPost == 1) {
@@ -53,7 +54,7 @@ public class BoardService {
                 return postToPostDto(boardRepository.findByCategoryAndUsername(category, username, pageRequest));
             }
         } else { // 검색창으로 검색을 했음
-            
+            log.info("null이 아니에요!!");
         }
         throw new Exception("오류가 발생했어요!");
     }
