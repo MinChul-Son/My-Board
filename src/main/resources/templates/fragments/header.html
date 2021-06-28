@@ -23,10 +23,6 @@ ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
                 <li><a href="/board" class="nav-link px-2 text-white">게시판</a></li>
             </ul>
 
-            <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
-                <input type="search" class="form-control form-control-dark" placeholder="Search..." aria-label="Search">
-            </form>
-
             <div class="text-end my-2">
                 <form th:action="@{'member/signIn'}" sec:authorize="isAnonymous()">
                 <button type="submit" class="btn btn-outline-light me-2">로그인</button>
