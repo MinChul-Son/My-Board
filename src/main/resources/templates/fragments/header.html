@@ -38,9 +38,9 @@ ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
                 <button class="btn btn-secondary my-2 my-sm-0" type="submit">Logout</button>
             </form>
             <div class="my-2">
-                <form th:action="@{'/board/mypost'}" sec:authorize="isAuthenticated()">
-                    <button type="submit" class="btn btn-warning">내 게시물 보기</button>
-                </form>
+                    <a class="btn btn-outline-warning" th:href="@{/board(myPost=${1})}" role="button"sec:authorize="isAuthenticated()">
+                        내 게시물 보기
+                    </a>
             </div>
         </div>
     </div>

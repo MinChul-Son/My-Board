@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import minchul.toyproject.board.controller.PostForm;
 import minchul.toyproject.board.domain.dto.PostDto;
+import minchul.toyproject.board.domain.dto.SearchDto;
 import minchul.toyproject.board.domain.entity.Category;
 import minchul.toyproject.board.domain.entity.Member;
 import minchul.toyproject.board.domain.entity.Post;
@@ -32,17 +33,33 @@ public class BoardService {
         return boardRepository.save(post).getId();
     }
 
-    public Page<PostDto> postList(int page, Category category) {
+    public Page<PostDto> postList(int page, Category category, int myPost, SearchDto searchDto, String username) throws Exception {
         PageRequest pageRequest = createPageRequest(page);
-        log.info("This is service");
-        Page<Post> pageMap;
-        if (category == null) {
-            pageMap = boardRepository.findAll(pageRequest);
-        } else {
-            pageMap = boardRepository.findByCategory(category, pageRequest);
+        /**
+         * * 조회가능한 case
+         * 1. 전체 조회
+         * 2. 카테고리 별 조회
+         * 3. 내 게시물 전체 조회
+         * 4. 내 게시물 중 카테고리 별 조회
+         */
+        if (searchDto == null) { // 검색창으로 검색하지 않음.
+            if (category == null && myPost == 0) {
+                return postToPostDto(boardRepository.findAll(pageRequest));
+            } else if (category == null && myPost == 1) {
+                return postToPostDto(boardRepository.findPostByMember(username, pageRequest));
+            } else if (category != null && myPost == 0) {
+                return postToPostDto(boardRepository.findByCategory(category, pageRequest));
+            } else if (category != null && myPost == 1) {
+                return postToPostDto(boardRepository.findByCategoryAndUsername(category, username, pageRequest));
+            }
+        } else { // 검색창으로 검색을 했음
+            
         }
-        Page<PostDto> toDtoMap = pageMap.map(post -> new PostDto(post));
-        return toDtoMap;
+        throw new Exception("오류가 발생했어요!");
+    }
+
+    public Page<PostDto> postToPostDto(Page<Post> pageMap) {
+        return pageMap.map(post -> new PostDto(post));
     }
 
     public PageRequest createPageRequest(int page) {
@@ -97,8 +114,11 @@ public class BoardService {
     public Page<PostDto> myList(int page, String username) {
         PageRequest pageRequest = createPageRequest(page);
         Page<Post> pageMap = boardRepository.findPostByMember(username, pageRequest);
-        Page<PostDto> toDtoMap = pageMap.map(post -> new PostDto(post));
+        Page<PostDto> toDtoMap = postToPostDto(pageMap);
         return toDtoMap;
     }
 
+    public void postSearch(SearchDto searchDto) {
+
+    }
 }

@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import minchul.toyproject.board.domain.dto.PostDto;
+import minchul.toyproject.board.domain.dto.SearchDto;
 import minchul.toyproject.board.domain.entity.Category;
 import minchul.toyproject.board.domain.entity.Member;
 import minchul.toyproject.board.domain.entity.Post;
@@ -35,10 +36,16 @@ public class BoardController {
     public String postList(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(required = false) Category category,
-            Model model) {
-        Page<PostDto> dtoPage = boardService.postList(page, category);
+            @RequestParam(defaultValue = "0") int myPost,
+            @ModelAttribute("searchDto") SearchDto searchDto,
+            Model model,
+            Authentication auth) throws Exception {
+        Page<PostDto> dtoPage = boardService.postList(page, category, myPost, searchDto, auth.getName());
         model.addAttribute("postList", dtoPage);
         model.addAttribute("categories", Arrays.asList(Category.values()));
+        model.addAttribute("myPost", myPost);
+        model.addAttribute("selectedCategory", category);
+        model.addAttribute("username", auth.getName());
         return "posts/list";
     }
 

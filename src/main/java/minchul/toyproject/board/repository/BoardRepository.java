@@ -25,4 +25,8 @@ public interface BoardRepository extends JpaRepository<Post, Long> {
 
     @Query("select p from Post p where p.category = :category")
     Page<Post> findByCategory(@Param("category") Category category, Pageable pageable);
+
+    @EntityGraph(attributePaths = {"member"})
+    @Query("select p from Post p where p.member.username = :username and p.category = :category")
+    Page<Post> findByCategoryAndUsername(@Param("category") Category category, @Param("username") String username, Pageable pageable);
 }
