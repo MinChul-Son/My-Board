@@ -32,20 +32,17 @@ public class BoardService {
         post.writerFromSession(post, findMember);
         return boardRepository.save(post).getId();
     }
-
+    /**
+     * * 조회가능한 case
+     * 1. 전체 조회
+     * 2. 카테고리 별 조회
+     * 3. 내 게시물 전체 조회
+     * 4. 내 게시물 중 카테고리 별 조회
+     *
+     * + 검색기능에 동적쿼리를 통해 파라미터를 처리하도록 해야할듯(Querydsl 사용)
+     */
     public Page<PostDto> postList(int page, Category category, int myPost, SearchDto searchDto, String username) {
         PageRequest pageRequest = createPageRequest(page);
-        log.info(searchDto.getSearchKey());
-        log.info(searchDto.getSearchValue());
-        /**
-         * * 조회가능한 case
-         * 1. 전체 조회
-         * 2. 카테고리 별 조회
-         * 3. 내 게시물 전체 조회
-         * 4. 내 게시물 중 카테고리 별 조회
-         *
-         * + 검색기능에 동적쿼리를 통해 파라미터를 처리하도록 해야할듯(Querydsl 사용)
-         */
         return boardRepository.findPageDynamicQuery(category, myPost, searchDto, username, pageRequest);
 //        log.info(String.valueOf(searchDto));
 //        if (searchDto.getSearchValue() == null) { // 검색창으로 검색하지 않음.
@@ -63,9 +60,9 @@ public class BoardService {
 //        }
     }
 
-    public Page<PostDto> postToPostDto(Page<Post> pageMap) {
-        return pageMap.map(post -> new PostDto(post));
-    }
+//    public Page<PostDto> postToPostDto(Page<Post> pageMap) { ==> Dto로 조회하는 것으로 대체
+//        return pageMap.map(post -> new PostDto(post));
+//    } 
 
     public PageRequest createPageRequest(int page) {
         return PageRequest.of(page, 5, Sort.by(Sort.Direction.DESC, "createdDate"));
@@ -116,14 +113,10 @@ public class BoardService {
         return false;
     }
 
-    public Page<PostDto> myList(int page, String username) {
-        PageRequest pageRequest = createPageRequest(page);
-        Page<Post> pageMap = boardRepository.findPostByMember(username, pageRequest);
-        Page<PostDto> toDtoMap = postToPostDto(pageMap);
-        return toDtoMap;
-    }
-
-    public void postSearch(SearchDto searchDto) {
-
-    }
+//    public Page<PostDto> myList(int page, String username) { // 한번에 검색 조건 바인딩하도록 변경
+//        PageRequest pageRequest = createPageRequest(page);
+//        Page<Post> pageMap = boardRepository.findPostByMember(username, pageRequest);
+//        Page<PostDto> toDtoMap = postToPostDto(pageMap);
+//        return toDtoMap;
+//    }
 }

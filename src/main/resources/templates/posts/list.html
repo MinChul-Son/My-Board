@@ -31,7 +31,7 @@
 			<ul class="dropdown-menu">
 				<li><a href="/board">전체</a></li>
 				<li th:each="category : ${categories}">
-					<a th:text="${category}" th:href="@{/board(category=${category}, myPost=${myPost})}">
+					<a th:text="${category}" th:href="@{/board(category=${category}, myPost=${myPost}, searchKey=${searchDto.searchKey}, searchValue=${searchDto.searchValue})}">
 						카테고리명
 					</a>
 				</li>
@@ -112,7 +112,7 @@
 					</li>
 					<li class="nav-item" th:unless="${postList.isFirst()}">
 						<a class="nav-link" th:href="@{/board(page=${postList.number}-1,
-						category=${selectedCategory}, myPost=${myPost})}">
+						category=${selectedCategory}, myPost=${myPost}, searchKey=${searchDto.searchKey}, searchValue=${searchDto.searchValue})}">
 							이전페이지
 						</a>
 					</li>
@@ -121,7 +121,7 @@
 					</li>
 					<li class="nav-item" th:unless="${postList.isLast()}">
 						<a class="nav-link" th:href="@{/board(page=${postList.number}+1,
-						category=${selectedCategory}, myPost=${myPost})}" tabindex="-1">다음페이지</a>
+						category=${selectedCategory}, myPost=${myPost}, searchKey=${searchDto.searchKey}, searchValue=${searchDto.searchValue})}" tabindex="-1">다음페이지</a>
 					</li>
 				</ul>
 			</div>

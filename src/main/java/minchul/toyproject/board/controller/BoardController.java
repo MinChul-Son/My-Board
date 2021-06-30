@@ -38,8 +38,7 @@ public class BoardController {
             @RequestParam(required = false) Category category,
             @RequestParam(defaultValue = "0") int myPost,
             @ModelAttribute("searchDto") SearchDto searchDto,
-            Model model,
-            Authentication auth) throws Exception {
+            Model model, Authentication auth){
         Page<PostDto> dtoPage = boardService.postList(page, category, myPost, searchDto, auth.getName());
         model.addAttribute("postList", dtoPage);
         model.addAttribute("categories", Arrays.asList(Category.values()));
@@ -49,12 +48,12 @@ public class BoardController {
         return "posts/list";
     }
 
-    @GetMapping("/board/mypost")
-    public String myPost(@RequestParam(defaultValue = "0") int page, Model model, Authentication auth) {
-        Page<PostDto> dtoPage = boardService.myList(page, auth.getName());
-        model.addAttribute("postList", dtoPage);
-        return "posts/list";
-    }
+//    @GetMapping("/board/mypost")
+//    public String myPost(@RequestParam(defaultValue = "0") int page, Model model, Authentication auth) {
+//        Page<PostDto> dtoPage = boardService.myList(page, auth.getName());
+//        model.addAttribute("postList", dtoPage);
+//        return "posts/list";
+//    }
 
     @GetMapping("/board/post/new")
     public String newPostForm(Model model, Authentication auth) {
