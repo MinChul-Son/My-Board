@@ -33,30 +33,34 @@ public class BoardService {
         return boardRepository.save(post).getId();
     }
 
-    public Page<PostDto> postList(int page, Category category, int myPost, SearchDto searchDto, String username) throws Exception {
+    public Page<PostDto> postList(int page, Category category, int myPost, SearchDto searchDto, String username) {
         PageRequest pageRequest = createPageRequest(page);
+        log.info(searchDto.getSearchKey());
+        log.info(searchDto.getSearchValue());
         /**
          * * 조회가능한 case
          * 1. 전체 조회
          * 2. 카테고리 별 조회
          * 3. 내 게시물 전체 조회
          * 4. 내 게시물 중 카테고리 별 조회
+         *
+         * + 검색기능에 동적쿼리를 통해 파라미터를 처리하도록 해야할듯(Querydsl 사용)
          */
-        log.info(String.valueOf(searchDto));
-        if (searchDto.getSearchValue() == null) { // 검색창으로 검색하지 않음.
-            if (category == null && myPost == 0) {
-                return postToPostDto(boardRepository.findAll(pageRequest));
-            } else if (category == null && myPost == 1) {
-                return postToPostDto(boardRepository.findPostByMember(username, pageRequest));
-            } else if (category != null && myPost == 0) {
-                return postToPostDto(boardRepository.findByCategory(category, pageRequest));
-            } else if (category != null && myPost == 1) {
-                return postToPostDto(boardRepository.findByCategoryAndUsername(category, username, pageRequest));
-            }
-        } else { // 검색창으로 검색을 했음
-            log.info("null이 아니에요!!");
-        }
-        throw new Exception("오류가 발생했어요!");
+        return boardRepository.findPageDynamicQuery(category, myPost, searchDto, username, pageRequest);
+//        log.info(String.valueOf(searchDto));
+//        if (searchDto.getSearchValue() == null) { // 검색창으로 검색하지 않음.
+//            if (category == null && myPost == 0) {
+//                return postToPostDto(boardRepository.findAll(pageRequest));
+//            } else if (category == null && myPost == 1) {
+//                return postToPostDto(boardRepository.findPostByMember(username, pageRequest));
+//            } else if (category != null && myPost == 0) {
+//                return postToPostDto(boardRepository.findByCategory(category, pageRequest));
+//            } else if (category != null && myPost == 1) {
+//                return postToPostDto(boardRepository.findByCategoryAndUsername(category, username, pageRequest));
+//            }
+//        } else { // 검색창으로 검색을 했음
+//            log.info("null이 아니에요!!");
+//        }
     }
 
     public Page<PostDto> postToPostDto(Page<Post> pageMap) {

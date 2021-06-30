@@ -12,7 +12,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 import java.util.Optional;
 
-public interface BoardRepository extends JpaRepository<Post, Long> {
+public interface BoardRepository extends JpaRepository<Post, Long>, BoardRepositoryCustom {
 
     Page<Post> findAll(Pageable pageable);
 
