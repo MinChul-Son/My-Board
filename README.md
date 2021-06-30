@@ -119,6 +119,8 @@ th:href="@{/board(page=${postList.number}-1, category=${selectedCategory}, myPos
     + QuerydslConfig : JPAQueryFactory를 스프링 빈으로 등록
     + BoardRepositoryCustom : 커스텀 인터페이스
     + BoardRepositoryImpl : 커스텀 인터페이스 구현체)
+* list.html에서 searchDto의 값들을 페이지를 이동할 때도 계속 가지고와 사용할 수 있도록 하였다.
+  - 검색창에 검색을 한 상태에서 다음 페이지 버튼을 누르면 검색창으로 검색한 결과에 대한 다음 페이지로 이동 
 * 현재 초기에 구상했던 게시판의 기능은 모두 구현을 했다.
 * 추가적으로 관리자 페이지를 설정할 예정이다.
   - 관리자는 회원의 게시물을 삭제 가능
