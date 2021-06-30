@@ -111,3 +111,16 @@ th:href="@{/board(page=${postList.number}-1, category=${selectedCategory}, myPos
 
 ----------------------------------
 
+### 6/30 to-do-list
+* Querydsl을 사용하여 동적쿼리 기능 **완료!**
+  - BooleanExpression을 사용하여 파라미터로 넘어온 값(category, mypost, searchDto, username)을 처리하고 where절에서 결과를 필터링한다.
+  - Querydsl을 사용하니 굉장히 편리하게 값을 필터링할 수 있는 것 같다.
+  - 추가된 클래스
+    + QuerydslConfig : JPAQueryFactory를 스프링 빈으로 등록
+    + BoardRepositoryCustom : 커스텀 인터페이스
+    + BoardRepositoryImpl : 커스텀 인터페이스 구현체)
+* 현재 초기에 구상했던 게시판의 기능은 모두 구현을 했다.
+* 추가적으로 관리자 페이지를 설정할 예정이다.
+  - 관리자는 회원의 게시물을 삭제 가능
+  - 관리자는 회원 목록을 관리 가능
+    + 추방, 조회
