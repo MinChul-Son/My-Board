@@ -2,7 +2,7 @@
 ## 💻 사용 기술 
 ### #Back-End
 #### Core
-* JAVA 8
+* JAVA 11
 * Spring MVC
 * Spring Boot
 * Spring Data JPA
