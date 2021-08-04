@@ -30,27 +30,21 @@
 ## 주요 기능 소개
 ### version 1.0(초기 버전)
 
-<details markdown="1">
-<summary>접기/펼치기</summary>
-
-* 로그인/로그아웃
-* 회원가입
-* 게시글 작성
-* 게시글 삭제
-  - 자신의 게시글만 삭제 가능
-* 게시글 수정
-  - 자신의 게시글만 삭제 가능 
-* 게시글 조회
+* [로그인/로그아웃/회원가입](https://github.com/MinChul-Son/My-Board/issues/1)
+* [게시글 작성](https://github.com/MinChul-Son/My-Board/issues/2)
+* [게시글 삭제/수정](https://github.com/MinChul-Son/My-Board/issues/4)
+  - 자신의 게시글만 삭제/수정 가능
+* [특정 게시물 조회, 게시글 목록 조회](https://github.com/MinChul-Son/My-Board/issues/3)
   - 카테고리별 조회
   - 내가 작성한 게시글 조회
-* 게시글 검색
+* [게시글 검색](https://github.com/MinChul-Son/My-Board/issues/7)
   - 제목으로 검색
   - 작성자로 검색
   - 내용으로 검색 
-* 조회수 기능
-* 페이징 기능
+* [조회수 기능](https://github.com/MinChul-Son/My-Board/issues/5)
+* [페이징 기능](https://github.com/MinChul-Son/My-Board/issues/6)
 
-</details>
+
 
 
 
