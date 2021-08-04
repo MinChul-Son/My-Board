@@ -1,13 +1,53 @@
-# 게시판 만들기
-## 사용 기술 : SpringMVC, SpringBoot, Spring Data JPA, Spring Security, Querydsl
-## IDE : IntelliJ
-## DB : MySQL
-## Template Engine : Thyleaf
-## UI : BootStrap
+# 📝게시판 만들기
+## 💻 사용 기술 
+### #Back-End
+#### Core
+* JAVA 8
+* Spring MVC
+* Spring Boot
+* Spring Data JPA
+* Spring Security
+* Querydsl
+
+#### Build Tool
+* Gradle
+
+#### Database
+* Mysql
+
+### #Front-End
+* Javascript
+* Thymeleaf
+* BootStrap
+
+
+## 💻 개발환경
+* IntelliJ
+* Postman
+* Github(Git bash)
 
 -----------------------------------
+## 주요 기능 소개
+### version 1.0(초기 버전)
+* 로그인/로그아웃
+* 회원가입
+* 게시글 작성
+* 게시글 삭제
+  - 자신의 게시글만 삭제 가능
+* 게시글 수정
+  - 자신의 게시글만 삭제 가능 
+* 게시글 조회
+  - 카테고리별 조회
+  - 내가 작성한 게시글 조회
+* 게시글 검색
+  - 제목으로 검색
+  - 작성자로 검색
+  - 내용으로 검색 
+* 조회수 기능
+
+
 ----------------------------------
-## 추가하면 좋을 기능 구상 중!
+## 추가하면 좋을 기능 구상 중!(점진적으로 기능 추가 + 업데이트 예정)
 * 추가적으로 관리자 페이지를 설정할 예정
   - 관리자는 회원의 게시물을 삭제 가능
   - 관리자는 회원 목록을 관리 가능
@@ -25,6 +65,7 @@
 
 ----------------------------------
 --------------------------------
+# 날짜별 To-Do-List
 ### 6/20
 * 프로젝트 생성
 * 게시글 작성, DB에 저장 기능 추가
