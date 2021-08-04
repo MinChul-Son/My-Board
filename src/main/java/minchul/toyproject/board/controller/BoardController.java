@@ -1,5 +1,7 @@
 package minchul.toyproject.board.controller;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,6 +26,7 @@ import java.util.Arrays;
 @RequiredArgsConstructor
 @Getter
 @Slf4j
+@Api(tags = {"게시판"})
 public class BoardController {
     private final BoardService boardService;
 
@@ -33,6 +36,7 @@ public class BoardController {
     }
 
     @GetMapping("/board")
+    @ApiOperation(value = "게시물 목록")
     public String postList(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(required = false) Category category,
@@ -56,6 +60,7 @@ public class BoardController {
 //    }
 
     @GetMapping("/board/post/new")
+    @ApiOperation(value = "새로운 게시물 작성")
     public String newPostForm(Model model, Authentication auth) {
         model.addAttribute("auth", auth);
         model.addAttribute("postForm", new PostForm());
@@ -65,6 +70,7 @@ public class BoardController {
 
 
     @PostMapping("/board/post/new")
+    @ApiOperation(value = "새로운 게시물 저장")
     public String savePost(@Valid PostForm form, BindingResult result, Authentication auth) {
         if (result.hasErrors()) {
             log.info("오류가 있습니다.");
@@ -75,6 +81,7 @@ public class BoardController {
     }
 
     @GetMapping("/board/post/{postId}")
+    @ApiOperation(value = "게시물 조회")
     public String postDetail(@PathVariable("postId") Long id, Model model, Authentication auth) throws Exception {
         try {
             PostDto postDto = boardService.getPost(id);
@@ -89,12 +96,14 @@ public class BoardController {
     }
 
     @DeleteMapping("/board/post/{postId}")
+    @ApiOperation(value = "게시물 삭제")
     public String postDelete(@PathVariable("postId") Long id) {
         boardService.deletePost(id);
         return "redirect:/board";
     }
 
     @GetMapping("/board/post/edit/{postId}")
+    @ApiOperation(value = "게시물 수정")
     public String postEdit(@PathVariable("postId") Long id, Model model) throws Exception {
         try {
             PostDto postDto = boardService.getPost(id);
@@ -111,6 +120,7 @@ public class BoardController {
     }
 
     @PutMapping("/board/post/edit/{postId}")
+    @ApiOperation(value = "수정한 게시물 저장")
     public String postUpdate(@PathVariable("postId") Long id, @Valid PostForm form, BindingResult result) throws Exception {
         boardService.updatePost(id, form);
         return "redirect:/board";
